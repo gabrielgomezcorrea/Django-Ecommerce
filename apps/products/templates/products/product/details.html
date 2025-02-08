@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {{ product.name }}
+{% endblock %}
+
+{% block content %}
+  <div class="container mx-auto mt-10 px-4">
+    <!-- Breadcrumb -->
+    <nav class="text-gray-600 text-sm mb-6">
+      <a href="{% url 'products:product_list' %}" class="hover:text-blue-500">Home</a> /{% if product.category %}
+        <a href="{% url 'products:product_list_by_category' product.category.slug %}" class="hover:text-blue-500">{{ product.category.name }}</a> /
+      {% endif %}
+      <span class="text-gray-800">{{ product.name }}</span>
+    </nav>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- Imagen del producto -->
+      <div class="w-full h-96 flex items-center justify-center bg-gray-100">
+        {% if product.image %}
+          <img class="w-full h-full object-contain" src="{{ product.image.url }}" alt="{{ product.name }}" />
+        {% else %}
+          <span class="text-gray-500">No Image Available</span>
+        {% endif %}
+      </div>
+
+      <!-- Detalles del producto -->
+      <div class="p-6">
+        <h1 class="text-3xl font-bold text-gray-800">{{ product.name }}</h1>
+
+        <!-- Precio -->
+        <p class="text-2xl font-semibold text-green-600 mt-3">$ {{ product.price }}</p>
+
+        <!-- Descripción -->
+        <p class="text-gray-700 mt-4">
+          {% if product.description %}
+            {{ product.description }}
+          {% else %}
+            No description available.
+          {% endif %}
+        </p>
+
+        <!-- Botón de compra -->
+        <div class="mt-6 text-center">
+          <button class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition shadow-lg w-full">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

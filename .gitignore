@@ -1,0 +1,43 @@
+# Django settings
+*.log
+*.pot
+*.pyc
+*.pyo
+__pycache__/
+db.sqlite3
+
+# Media files
+/mediafiles/
+
+# Static files
+/static/css/output.css
+
+# Django migrations
+*/migrations/*
+
+# Node.js dependencies
+/node_modules/
+
+# Python bytecode
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+*.env
+
+# IDE files (si usas algún editor o IDE como VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Django secret key file
+secret_key.txt
+
+# Configuration files for your editor/IDE
+*.swp
+
+# OS files (Windows, MacOS, etc.)
+.DS_Store
+Thumbs.db
