@@ -16,7 +16,7 @@
     </nav>
 
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-      <!-- Imagen del producto -->
+      <!-- Image -->
       <div class="w-full h-96 flex items-center justify-center bg-gray-100">
         {% if product.image %}
           <img class="w-full h-full object-contain" src="{{ product.image.url }}" alt="{{ product.name }}" />
@@ -25,14 +25,14 @@
         {% endif %}
       </div>
 
-      <!-- Detalles del producto -->
+      <!-- Details -->
       <div class="p-6">
         <h1 class="text-3xl font-bold text-gray-800">{{ product.name }}</h1>
 
-        <!-- Precio -->
+        <!-- Price -->
         <p class="text-2xl font-semibold text-green-600 mt-3">$ {{ product.price }}</p>
 
-        <!-- Descripción -->
+        <!-- Description -->
         <p class="text-gray-700 mt-4">
           {% if product.description %}
             {{ product.description }}
@@ -41,11 +41,39 @@
           {% endif %}
         </p>
 
-        <!-- Botón de compra -->
-        <div class="mt-6 text-center">
-          <button class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition shadow-lg w-full">Add to Cart</button>
-        </div>
+        <!-- Add to Cart Button -->
+        <form id="add-to-cart-form" method="post" action="{% url 'cart:cart_add' product.id %}" class="mt-6 text-center">
+          {% csrf_token %}
+          <button type="submit" class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition shadow-lg w-full cursor-pointer">Add to Cart</button>
+
+          <p id="cart-message" class="hidden pt-3"></p>
+        </form>
       </div>
     </div>
   </div>
+
+  <!-- Script to handle adding product to cart -->
+  <script>
+    const addToCartForm = document.getElementById('add-to-cart-form')
+    const cartMessage = document.getElementById('cart-message')
+    
+    addToCartForm.addEventListener('submit', async (e) => {
+      e.preventDefault()
+    
+      const response = await fetch(addToCartForm.action, {
+        method: addToCartForm.method,
+        body: new FormData(addToCartForm)
+      })
+    
+      const data = await response.json()
+    
+      if (response.ok) {
+        cartMessage.textContent = 'Product added to cart.'
+        cartMessage.classList.remove('hidden')
+      } else {
+        cartMessage.textContent = data.message
+        cartMessage.classList.remove('hidden')
+      }
+    })
+  </script>
 {% endblock %}
