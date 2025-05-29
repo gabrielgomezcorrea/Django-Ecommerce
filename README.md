@@ -6,6 +6,3 @@ Django functional E-commerce website with tailwindcss, where users can browser a
 
 Follow these steps to get the project running:
 
-1. -
-2. -
-3. - ...
